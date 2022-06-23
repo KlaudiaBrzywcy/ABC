@@ -1,29 +1,45 @@
 import React, {useState} from "react";
 // import {useForm} from 'react-hook-form';
-import './FormWrapper.css'
+import './FormWrapper.css';
+import FormField from "./FormFIeld/FormField";
+import FormFieldSelect from "./FormFIeld/FormFieldSelect";
 
 const FormWrapper = () => {
 
+    const [values, setValues] = useState({
+        name: '',
+        preparation_time: '00:00:00',
+        type: '',
+        no_of_slices: 0,
+        diameter: 0,
+        spicyness_scale: 0,
+        slices_of_bread: 0
+    })  
     
+    const onChange = (e) => {
+        setValues({...values, [e.target.name]: e.target.value})
+        console.log(values)
+    }
 
-    const [name, setName] = useState('');
-    const [preparation_time, setPrepTime] = useState('00:00:00');
-    const [type, setType] = useState('');
-    const [no_of_slices, setSlices] = useState(0);
-    const [diameter, setDiameter] = useState(0);
-    const [spicyness_scale, setSpicyness] = useState(0);
-    const [slices_of_bread, setBreadSlices] = useState(0);
+    // const [name, setName] = useState('');
+    // const [preparation_time, setPrepTime] = useState('00:00:00');
+    // const [type, setType] = useState('');
+    // const [no_of_slices, setSlices] = useState(0);
+    // const [diameter, setDiameter] = useState(0);
+    // const [spicyness_scale, setSpicyness] = useState(0);
+    // const [slices_of_bread, setBreadSlices] = useState(0);
 
-    const handleTypeChange = (e) => {
-      setType(e.target.value);  
-    };
+    // const handleTypeChange = (e) => {
+    //   setType(e.target.value);  
+    // };
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData(form);
-        console.log(formData);
-        const foodieForm = {name, preparation_time, type};
-        console.log(foodieForm)
+        // const formData = new FormData(form);
+        // console.log(formData);
+        // const foodieForm = {name, preparation_time, type};
+        // console.log(foodieForm)
+        const foodieForm = {}
        
         fetch('https://formsubmit.co/kbrzywcy@gmail.com', {
             method: 'POST',
@@ -37,21 +53,26 @@ const FormWrapper = () => {
 
             <form onSubmit={onSubmit} id='form'>
 
+                {/* <div className="field">
+                    <label>Name:</label>
+                    <input 
+                        type="text" 
+                        name="name"
+                        required
+                        placeholder="dish name"
+                        value={name} 
+                        onChange={(e)=>setName(e.target.value)}
+                    />
+                </div> */}
+                <FormField label={'Name:'} type={'text'} name={'name'} placeholder={'dish name'} value={values.name} onChange={onChange}/>
+                <FormField label={'Preparation time:'} type={'text'} name={'preparation_time'} value={values.preparation_time} onChange={onChange} pattern="\d\d:\d\d:\d\d" />
+                <FormFieldSelect label={'Type:'} name={'type'} value={values.type} onChange={onChange}/>
+                 
                 
-                <label>Name:</label>
-                <input 
-                    type="text" 
-                    name="name"
-                    required
-                    placeholder="dish name"
-                    value={name} 
-                    onChange={(e)=>setName(e.target.value)}
-                />
-                {name === '' &&  <p className="err-msg">Field is required!</p>} 
-               
                
 
-                <label>Preparation time: </label>
+
+                {/* <label>Preparation time: </label>
                 <input
                   type="text"
                   name="preparation_time"
@@ -61,7 +82,7 @@ const FormWrapper = () => {
                   value={preparation_time} 
                   onChange={(e)=>setPrepTime(e.target.value)}
                 />
-                {/* <p className="err-msg">Field is required!</p> */}
+                
                 
                 <label>Pick type of dish</label>
                 <select name="type" value={type} onChange={handleTypeChange} 
@@ -83,7 +104,7 @@ const FormWrapper = () => {
                             value={no_of_slices} 
                             onChange={(e)=>setSlices(e.target.value)}
                         />
-                        {/* <p className="err-msg">Field is required!</p> */}
+                        
                         
                         <label>Diameter: </label>
                         <input 
@@ -94,7 +115,7 @@ const FormWrapper = () => {
                             value={diameter}
                             onChange={(e)=> setDiameter(e.target.value)}
                         />
-                        {/* <p className="err-msg">Field is required!</p> */}
+                       
                     </React.Fragment>
                 }
 
@@ -111,7 +132,7 @@ const FormWrapper = () => {
                         value={spicyness_scale} 
                         onChange={(e)=> setSpicyness(e.target.value)}
                         />
-                        {/* <p className="err-msg">Field is required!</p> */}
+                        
                     </React.Fragment>
                 }
 
@@ -125,9 +146,9 @@ const FormWrapper = () => {
                             value={slices_of_bread} 
                             onChange={(e)=> setBreadSlices(e.target.value)}
                         />
-                        {/* <p className="err-msg">Field is required!</p> */}
+                       
                     </React.Fragment>
-                } 
+                }  */}
 
                 <button type="submit">Send</button>
 
