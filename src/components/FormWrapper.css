@@ -1,0 +1,18 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+}
+
+input, select {
+    width: 300px;
+    text-align: center;
+}
+
+.err-msg {
+    color: rgb(236, 15, 15);
+    
+}
+
+
