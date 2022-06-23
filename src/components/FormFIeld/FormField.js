@@ -1,6 +1,6 @@
 import React from "react";
 
-const FormField = ({label,type, name,placeholder, value, onChange}) => {
+const FormField = ({label,type, name,placeholder, value, min, max, onChange}) => {
     return (
         <div className="field">
             <label>{label}</label>
@@ -10,6 +10,8 @@ const FormField = ({label,type, name,placeholder, value, onChange}) => {
                 placeholder={placeholder}
                 value={value} 
                 onChange={onChange}
+                min={min}
+                max={max}
                 required
             />
             {/* {name === '' &&  <p className="err-msg">Field is required!</p>}  */}

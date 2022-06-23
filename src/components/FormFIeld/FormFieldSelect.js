@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import FormField from "./FormField";
 
+
 const FormFieldSelect = ({label, name, value, onChange}) => {
+
+    
     return (
         <React.Fragment>
             <div className="field">
@@ -17,8 +20,8 @@ const FormFieldSelect = ({label, name, value, onChange}) => {
 
             {value === 'pizza'&&
                 <React.Fragment> 
-                    <FormField  label={'Number of slices:'} type={'number'} name={'no_of_slices'} placeholder={'Nr of slices?'}  onChange={onChange} />
-                    <FormField  label={'Diameter:'} type={'number'} name={'diameter'} placeholder={"Diameter of your pizza in cm?" } onChange={onChange} /> 
+                    <FormField  label={'Number of slices:'} type={'number'} name={'no_of_slices'} placeholder={'Nr of slices?'}  onChange={onChange} min={1}/>
+                    <FormField  label={'Diameter:'} type={'number'} name={'diameter'} placeholder={"Diameter of your pizza in cm?" } onChange={onChange} min={15} /> 
                 </React.Fragment>
             }
 
