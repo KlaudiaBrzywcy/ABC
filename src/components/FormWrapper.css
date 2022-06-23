@@ -1,3 +1,9 @@
+.form-wrapper {
+    background-color: rgb(152, 223, 247);
+    padding: 30px;
+    border-radius: 20px;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -5,8 +11,34 @@ form {
     align-items: center;
 }
 
-input, select {
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+input, select{
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+    margin: 15px 0 15px 0;
+    
+}
+
+input:focus{
+    background-color:rgb(108, 156, 172);
+}
+
+input {
     width: 300px;
+    padding: 11px 20px;
+}
+select {
+    width: 340px;
+    padding: 10px 20px;
+}
+label {
+    color:rgb(51, 75, 83);
+    font-weight: 600;
     text-align: center;
 }
 

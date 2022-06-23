@@ -1,39 +1,27 @@
-import React, {useState} from "react";
-import FormField from "./FormField";
+import React, { useEffect } from "react";
+import "../FormWrapper.css";
 
-
-const FormFieldSelect = ({label, name, value, onChange}) => {
-
-    
-    return (
-        <React.Fragment>
-            <div className="field">
-                <label>{label}</label>
-                <select name={name} value={value} onChange={onChange} required>
-                    <option value="">--dishes--</option>
-                    <option value="pizza">Pizza</option>
-                    <option value="soup">Soup</option>
-                    <option value="sandwich">Sandwich</option>    
-                </select> 
-                
-            </div>
-
-            {value === 'pizza'&&
-                <React.Fragment> 
-                    <FormField  label={'Number of slices:'} type={'number'} name={'no_of_slices'} placeholder={'Nr of slices?'}  onChange={onChange} min={1}/>
-                    <FormField  label={'Diameter:'} type={'number'} name={'diameter'} placeholder={"Diameter of your pizza in cm?" } onChange={onChange} min={15} /> 
-                </React.Fragment>
-            }
-
-            {value === 'soup' && 
-                <FormField label={'Spiciness scale:'} type={'number'} name={'spicyness_scale'} placeholder={"Spicyness on scale 1-10" } onChange={onChange} min={1} max={10} />
-            }
-        
-            {value === 'sandwich' && 
-                <FormField label={'Slices of bread:'} type={'number'} name={'slices_of_bread'} placeholder={"How many slices?" } onChange={onChange}/>
-            }
-        </React.Fragment>    
-    )
-}
+const FormFieldSelect = ({ label, name, value, onChange, submit }) => (
+  <div className="form-field">
+    <label>{label}</label>
+    <select
+      name={name}
+      value={value}
+      onChange={onChange}
+      required
+      submit={submit}
+    >
+      <option value="">--dishes--</option>
+      <option value="pizza">Pizza</option>
+      <option value="soup">Soup</option>
+      <option value="sandwich">Sandwich</option>
+    </select>
+    {value === "" && submit ? (
+      <p className="err-msg">{label} is required!</p>
+    ) : (
+      <p></p>
+    )}
+  </div>
+);
 
 export default FormFieldSelect;
