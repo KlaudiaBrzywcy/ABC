@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./FormWrapper.css";
-import FormField from "./FormFIeld/FormField";
-import FormFieldSelect from "./FormFIeld/FormFieldSelect";
+import FormField from "./FormField/FormField";
+import FormFieldSelect from "./FormField/FormFieldSelect";
 
 const FormWrapper = () => {
+  const [stateID, setStateID] = useState(1);
+
   const formik = useFormik({
     initialValues: {
       name: "",
       preparation_time: "",
       type: "",
-      // [formik.type === "pizza"]: formik.no_of_slices || 0,
-      // [formik.type === "pizza"]: formik.diameter || 0,
       no_of_slices: 0,
       diameter: 0,
       spicyness_scale: 0,
@@ -56,7 +56,9 @@ const FormWrapper = () => {
       }),
     }),
     onSubmit: (values, { resetForm }) => {
-      const foodieForm = { ...values };
+      let foodieID = { id: stateID };
+      const foodieForm = { ...values, ...foodieID };
+      console.log("ff", foodieForm);
       const readyFoodieForm = Object.entries(foodieForm).filter(
         ([, value]) => value !== 0
       );
@@ -69,7 +71,8 @@ const FormWrapper = () => {
         .then(() =>
           console.log(JSON.stringify(Object.fromEntries(readyFoodieForm)))
         )
-        .then(() => resetForm());
+        .then(() => resetForm())
+        .then(() => setStateID(stateID + 1));
     },
   });
 
@@ -86,7 +89,7 @@ const FormWrapper = () => {
           onBlur={formik.handleBlur}
         />
         {formik.touched.name && formik.errors.name ? (
-          <p>{formik.errors.name}</p>
+          <p className="err">{formik.errors.name}</p>
         ) : null}
         <FormField
           label={"Preparation time:"}
@@ -99,7 +102,7 @@ const FormWrapper = () => {
           onBlur={formik.handleBlur}
         />
         {formik.touched.preparation_time && formik.errors.preparation_time ? (
-          <p>{formik.errors.preparation_time}</p>
+          <p className="err">{formik.errors.preparation_time}</p>
         ) : null}
         <FormFieldSelect
           label={"Type:"}
@@ -109,7 +112,7 @@ const FormWrapper = () => {
           onBlur={formik.handleBlur}
         />
         {formik.touched.type && formik.errors.type ? (
-          <p>{formik.errors.type}</p>
+          <p className="err">{formik.errors.type}</p>
         ) : null}
 
         {formik.values.type === "pizza" && (
@@ -124,7 +127,7 @@ const FormWrapper = () => {
               min={1}
             />
             {formik.errors.no_of_slices ? (
-              <p>{formik.errors.no_of_slices}</p>
+              <p className="err">{formik.errors.no_of_slices}</p>
             ) : null}
 
             <FormField
@@ -137,7 +140,9 @@ const FormWrapper = () => {
               step={0.1}
               min={15}
             />
-            {formik.errors.diameter ? <p>{formik.errors.diameter}</p> : null}
+            {formik.errors.diameter ? (
+              <p className="err">{formik.errors.diameter}</p>
+            ) : null}
           </>
         )}
 
@@ -154,7 +159,7 @@ const FormWrapper = () => {
               max={10}
             />
             {formik.errors.spicyness_scale ? (
-              <p>{formik.errors.spicyness_scale}</p>
+              <p className="err">{formik.errors.spicyness_scale}</p>
             ) : null}
           </>
         )}
@@ -171,7 +176,7 @@ const FormWrapper = () => {
               min={1}
             />
             {formik.errors.slices_of_bread ? (
-              <p>{formik.errors.slices_of_bread}</p>
+              <p className="err">{formik.errors.slices_of_bread}</p>
             ) : null}
           </>
         )}
