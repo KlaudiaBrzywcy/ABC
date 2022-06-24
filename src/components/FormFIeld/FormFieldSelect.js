@@ -1,26 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../FormWrapper.css";
 
-const FormFieldSelect = ({ label, name, value, onChange, submit }) => (
+const FormFieldSelect = ({ label, name, value, onChange, onBlur }) => (
   <div className="form-field">
     <label>{label}</label>
-    <select
-      name={name}
-      value={value}
-      onChange={onChange}
-      required
-      submit={submit}
-    >
+    <select name={name} value={value} onChange={onChange} onBlur={onBlur}>
       <option value="">--dishes--</option>
       <option value="pizza">Pizza</option>
       <option value="soup">Soup</option>
       <option value="sandwich">Sandwich</option>
     </select>
-    {value === "" && submit ? (
-      <p className="err-msg">{label} is required!</p>
-    ) : (
-      <p></p>
-    )}
   </div>
 );
 

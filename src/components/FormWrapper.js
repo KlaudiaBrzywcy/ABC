@@ -1,123 +1,182 @@
-import React, { useState } from "react";
-// import {useForm} from 'react-hook-form';
+import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import "./FormWrapper.css";
 import FormField from "./FormFIeld/FormField";
 import FormFieldSelect from "./FormFIeld/FormFieldSelect";
 
 const FormWrapper = () => {
-  const [values, setValues] = useState({
-    name: "",
-    preparation_time: "00:00:00",
-    type: "",
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      preparation_time: "",
+      type: "",
+      // [formik.type === "pizza"]: formik.no_of_slices || 0,
+      // [formik.type === "pizza"]: formik.diameter || 0,
+      no_of_slices: 0,
+      diameter: 0,
+      spicyness_scale: 0,
+      slices_of_bread: 0,
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .max(50, "Max 50 characters")
+        .required("Name is required!"),
+      preparation_time: Yup.string().required("Preparation time is required!"),
+
+      type: Yup.string().required("Type is required!"),
+
+      no_of_slices: Yup.number().when("type", {
+        is: "pizza",
+        then: Yup.number()
+          .required("Nr of slices is required!")
+          .min(1, "Min 1 slice!"),
+      }),
+
+      diameter: Yup.number().when("type", {
+        is: "pizza",
+        then: Yup.number()
+          .min(15, "Min 15 cm!")
+          .required("Nr of slices is required!"),
+      }),
+
+      spicyness_scale: Yup.number().when("type", {
+        is: "soup",
+        then: Yup.number()
+          .min(1, "Spiciness scale 1-10!")
+          .max(10, "Spiciness scale 1-10!")
+          .required("Spiciness scale is required!"),
+      }),
+
+      slices_of_bread: Yup.number().when("type", {
+        is: "sandwich",
+        then: Yup.number()
+          .min(1, "Min 1 slice!")
+          .required("Nr of slices is required!"),
+      }),
+    }),
+    onSubmit: (values, { resetForm }) => {
+      const foodieForm = { ...values };
+      const readyFoodieForm = Object.entries(foodieForm).filter(
+        ([, value]) => value !== 0
+      );
+      console.log(Object.fromEntries(readyFoodieForm));
+      fetch("https://formsubmit.co/kbrzywcy@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(readyFoodieForm)),
+      })
+        .then(() =>
+          console.log(JSON.stringify(Object.fromEntries(readyFoodieForm)))
+        )
+        .then(() => resetForm());
+    },
   });
-
-  const [submit, setSubmit] = useState(false);
-  //  const setInitialValues = () => {setValues({name: values.name})
-
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
-  const clearState = (e) => {
-    setValues((prevState) => ({
-      ...prevState,
-    }));
-    // setValues({ ...values, [e.target.name]: "" });
-    // if (e.target.name === "") {
-    //   delete values.e.target.name;
-    // }
-  };
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const foodieForm = { ...values };
-    console.log(foodieForm);
-    fetch("https://formsubmit.co/kbrzywcy@gmail.com", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(foodieForm),
-    }).then(() => console.log("new form added"));
-  };
 
   return (
     <div className="form-wrapper">
-      <form onSubmit={onSubmit} id="form">
+      <form onSubmit={formik.handleSubmit} id="form">
         <FormField
           label={"Name:"}
           type={"text"}
           name={"name"}
           placeholder={"dish name"}
-          value={values.name || ""}
-          onChange={onChange}
-          submit={submit}
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
+        {formik.touched.name && formik.errors.name ? (
+          <p>{formik.errors.name}</p>
+        ) : null}
         <FormField
           label={"Preparation time:"}
           type={"text"}
           name={"preparation_time"}
-          value={values.preparation_time}
-          onChange={onChange}
-          pattern="\d\d:\d\d:\d\d"
+          placeholder={"00:00:00"}
+          value={formik.values.preparation_time}
+          onChange={formik.handleChange}
+          // pattern={"dd\dd:dd"}
+          onBlur={formik.handleBlur}
         />
+        {formik.touched.preparation_time && formik.errors.preparation_time ? (
+          <p>{formik.errors.preparation_time}</p>
+        ) : null}
         <FormFieldSelect
           label={"Type:"}
           name={"type"}
-          value={values.type}
-          onChange={onChange}
-          setValues={setValues}
-          values={values}
+          value={formik.values.type}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
-        {values.type === "pizza" && (
+        {formik.touched.type && formik.errors.type ? (
+          <p>{formik.errors.type}</p>
+        ) : null}
+
+        {formik.values.type === "pizza" && (
           <>
             <FormField
               label={"Number of slices:"}
               type={"number"}
               name={"no_of_slices"}
-              value={values.no_of_slices}
               placeholder={"Nr of slices?"}
-              onChange={onChange}
+              value={formik.values.no_of_slices}
+              onChange={formik.handleChange}
               min={1}
             />
+            {formik.errors.no_of_slices ? (
+              <p>{formik.errors.no_of_slices}</p>
+            ) : null}
+
             <FormField
               label={"Diameter:"}
               type={"number"}
               name={"diameter"}
-              value={parseFloat(values.diameter)}
               placeholder={"Diameter of your pizza in cm?"}
-              onChange={onChange}
-              min={15.0}
+              value={parseFloat(formik.values.diameter)}
+              onChange={formik.handleChange}
               step={0.1}
+              min={15}
             />
+            {formik.errors.diameter ? <p>{formik.errors.diameter}</p> : null}
           </>
         )}
 
-        {values.type === "soup" && (
-          <FormField
-            label={"Spiciness scale:"}
-            type={"number"}
-            name={"spicyness_scale"}
-            value={values.spicyness_scale}
-            placeholder={"Spicyness on scale 1-10"}
-            onChange={onChange}
-            min={1}
-            max={10}
-          />
+        {formik.values.type === "soup" && (
+          <>
+            <FormField
+              label={"Spiciness scale:"}
+              type={"number"}
+              name={"spicyness_scale"}
+              placeholder={"Spicyness on scale 1-10"}
+              value={formik.values.spicyness_scale}
+              onChange={formik.handleChange}
+              min={1}
+              max={10}
+            />
+            {formik.errors.spicyness_scale ? (
+              <p>{formik.errors.spicyness_scale}</p>
+            ) : null}
+          </>
         )}
 
-        {values.type === "sandwich" && (
-          <FormField
-            label={"Slices of bread:"}
-            type={"number"}
-            name={"slices_of_bread"}
-            value={values.slices_of_bread}
-            placeholder={"How many slices?"}
-            onChange={onChange}
-          />
+        {formik.values.type === "sandwich" && (
+          <>
+            <FormField
+              label={"Slices of bread:"}
+              type={"number"}
+              name={"slices_of_bread"}
+              placeholder={"How many slices?"}
+              value={formik.values.slices_of_bread}
+              onChange={formik.handleChange}
+              min={1}
+            />
+            {formik.errors.slices_of_bread ? (
+              <p>{formik.errors.slices_of_bread}</p>
+            ) : null}
+          </>
         )}
 
-        <button type="submit" onClick={() => setSubmit(true)}>
-          Send
-        </button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

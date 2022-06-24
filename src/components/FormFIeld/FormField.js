@@ -11,7 +11,8 @@ const FormField = ({
   max,
   step,
   onChange,
-  submit,
+  onBlur,
+  pattern,
 }) => {
   return (
     <div className="form-field">
@@ -25,14 +26,9 @@ const FormField = ({
         min={min}
         max={max}
         step={step}
-        required
-        submit={submit}
+        onBlur={onBlur}
+        pattern={pattern}
       />
-      {value === "" && submit ? (
-        <p className="err-msg">{label} is required!</p>
-      ) : (
-        <p></p>
-      )}
     </div>
   );
 };
