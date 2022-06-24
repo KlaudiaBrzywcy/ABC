@@ -22,10 +22,12 @@ const FormWrapper = () => {
       name: Yup.string()
         .max(50, "Max 50 characters")
         .required("Name is required!"),
-      preparation_time: Yup.string().required("Preparation time is required!"),
+
+      preparation_time: Yup.string()
+        .required("Preparation time is required!")
+        .matches(/^\d{2}:\d{2}:\d{2}$/gm, "Set required format!"),
 
       type: Yup.string().required("Type is required!"),
-
       no_of_slices: Yup.number().when("type", {
         is: "pizza",
         then: Yup.number()
@@ -104,6 +106,7 @@ const FormWrapper = () => {
         {formik.touched.preparation_time && formik.errors.preparation_time ? (
           <p className="err">{formik.errors.preparation_time}</p>
         ) : null}
+
         <FormFieldSelect
           label={"Type:"}
           name={"type"}
