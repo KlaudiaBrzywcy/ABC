@@ -26,7 +26,16 @@ input, select{
 
 input:focus{
     background-color:rgb(108, 156, 172);
+    border: none;
+    outline: 3px dashed orange;
 }
+
+select:focus {
+    background-color:rgb(108, 156, 172);
+    border: none;
+    outline: 3px dashed rgb(255, 165, 0);
+}
+
 
 input {
     width: 300px;
@@ -42,8 +51,15 @@ label {
     text-align: center;
 }
 
-.err-msg {
-    color: rgb(236, 15, 15);
+.icon {
+    font-size: 30px;
+    color: rgb(255, 136, 0);
+}
+
+.err {
+    color: rgb(255, 136, 0);
+    font-weight: 600;
+    margin-top: 0px;
     
 }
 

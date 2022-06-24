@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import "./FormWrapper.css";
 import FormField from "./FormField/FormField";
 import FormFieldSelect from "./FormField/FormFieldSelect";
+import { FaPizzaSlice, FaBreadSlice } from "react-icons/fa";
+import { CgBowl } from "react-icons/cg";
 
 const FormWrapper = () => {
   const [stateID, setStateID] = useState(1);
@@ -100,7 +102,6 @@ const FormWrapper = () => {
           placeholder={"00:00:00"}
           value={formik.values.preparation_time}
           onChange={formik.handleChange}
-          // pattern={"dd\dd:dd"}
           onBlur={formik.handleBlur}
         />
         {formik.touched.preparation_time && formik.errors.preparation_time ? (
@@ -111,7 +112,21 @@ const FormWrapper = () => {
           label={"Type:"}
           name={"type"}
           value={formik.values.type}
-          onChange={formik.handleChange}
+          onChange={(e) => {
+            formik.handleChange(e);
+            if (e.currentTarget.value === "pizza") {
+              formik.values.slices_of_bread = 0;
+              formik.values.spicyness_scale = 0;
+            } else if (e.currentTarget.value === "sandwich") {
+              formik.values.no_of_slices = 0;
+              formik.values.diameter = 0;
+              formik.values.spicyness_scale = 0;
+            } else if (e.currentTarget.value === "soup") {
+              formik.values.no_of_slices = 0;
+              formik.values.diameter = 0;
+              formik.values.slices_of_bread = 0;
+            }
+          }}
           onBlur={formik.handleBlur}
         />
         {formik.touched.type && formik.errors.type ? (
@@ -120,6 +135,9 @@ const FormWrapper = () => {
 
         {formik.values.type === "pizza" && (
           <>
+            <span className="icon">
+              <FaPizzaSlice />
+            </span>
             <FormField
               label={"Number of slices:"}
               type={"number"}
@@ -151,6 +169,9 @@ const FormWrapper = () => {
 
         {formik.values.type === "soup" && (
           <>
+            <span className="icon">
+              <CgBowl />
+            </span>
             <FormField
               label={"Spiciness scale:"}
               type={"number"}
@@ -158,7 +179,7 @@ const FormWrapper = () => {
               placeholder={"Spicyness on scale 1-10"}
               value={formik.values.spicyness_scale}
               onChange={formik.handleChange}
-              min={1}
+              min={0}
               max={10}
             />
             {formik.errors.spicyness_scale ? (
@@ -169,6 +190,9 @@ const FormWrapper = () => {
 
         {formik.values.type === "sandwich" && (
           <>
+            <span className="icon">
+              <FaBreadSlice />
+            </span>
             <FormField
               label={"Slices of bread:"}
               type={"number"}
@@ -176,7 +200,7 @@ const FormWrapper = () => {
               placeholder={"How many slices?"}
               value={formik.values.slices_of_bread}
               onChange={formik.handleChange}
-              min={1}
+              min={0}
             />
             {formik.errors.slices_of_bread ? (
               <p className="err">{formik.errors.slices_of_bread}</p>
