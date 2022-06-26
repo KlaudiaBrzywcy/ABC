@@ -10,6 +10,7 @@ import { CgBowl } from "react-icons/cg";
 
 const FormWrapper = () => {
   const [stateID, setStateID] = useState(uuidv4());
+  const [errSubmit, setErrSubmit] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -68,7 +69,7 @@ const FormWrapper = () => {
         ([, value]) => value !== 0
       );
       console.log(Object.fromEntries(readyFoodieForm));
-      fetch("https://formsubmit.co/kbrzywcy@gmail.com", {
+      fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Object.fromEntries(readyFoodieForm)),
@@ -77,7 +78,11 @@ const FormWrapper = () => {
           console.log(JSON.stringify(Object.fromEntries(readyFoodieForm)))
         )
         .then(() => resetForm())
-        .then(() => setStateID(uuidv4()));
+        .then(() => setStateID(uuidv4()))
+        .catch((error) => {
+          console.log("Submission failed");
+          setErrSubmit("Submission failed!");
+        });
     },
   });
 
@@ -213,6 +218,7 @@ const FormWrapper = () => {
           SUBMIT
         </button>
       </form>
+      <p className="err-submit">{errSubmit}</p>
     </div>
   );
 };

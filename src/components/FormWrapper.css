@@ -77,6 +77,14 @@ label {
     margin-top: 0px;    
 } 
 
+.err-submit {
+    color: rgb(255, 136, 0);
+    background-color:rgb(51, 75, 83) ;
+    text-align: center;
+    padding: 15px 0;
+    border-radius: 20px;
+}
+
 
 
 
