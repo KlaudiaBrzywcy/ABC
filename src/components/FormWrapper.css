@@ -56,11 +56,27 @@ label {
     color: rgb(255, 136, 0);
 }
 
+.submit-btn {
+    background-color: rgb(255, 136, 0);
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    font-weight: 700;
+    color:rgb(51, 75, 83);
+    cursor: pointer;
+    transition: 0.5s smooth;
+}
+.submit-btn:hover {
+    background-color:rgb(51, 75, 83);
+    color: rgb(255, 136, 0) ;
+}
+
 .err {
     color: rgb(255, 136, 0);
     font-weight: 600;
-    margin-top: 0px;
-    
-}
+    margin-top: 0px;    
+} 
+
+
 
 

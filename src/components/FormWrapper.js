@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { v4 as uuidv4 } from "uuid";
 import "./FormWrapper.css";
 import FormField from "./FormField/FormField";
 import FormFieldSelect from "./FormField/FormFieldSelect";
@@ -8,7 +9,7 @@ import { FaPizzaSlice, FaBreadSlice } from "react-icons/fa";
 import { CgBowl } from "react-icons/cg";
 
 const FormWrapper = () => {
-  const [stateID, setStateID] = useState(1);
+  const [stateID, setStateID] = useState(uuidv4());
 
   const formik = useFormik({
     initialValues: {
@@ -76,7 +77,7 @@ const FormWrapper = () => {
           console.log(JSON.stringify(Object.fromEntries(readyFoodieForm)))
         )
         .then(() => resetForm())
-        .then(() => setStateID(stateID + 1));
+        .then(() => setStateID(uuidv4()));
     },
   });
 
@@ -208,7 +209,9 @@ const FormWrapper = () => {
           </>
         )}
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="submit-btn">
+          SUBMIT
+        </button>
       </form>
     </div>
   );
