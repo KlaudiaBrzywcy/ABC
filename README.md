@@ -27,6 +27,8 @@ Hex-Ocean Foodie App is a simple React app with form. Some fields are conditiona
 
 ## ✨ You can find deployed app here:
 
+-https://klaudiabrzywcy.github.io/HexOcean-app
+
 ## Run with:
 
 ### `npm start`
