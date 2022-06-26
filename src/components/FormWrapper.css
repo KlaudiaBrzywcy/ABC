@@ -36,7 +36,6 @@ select:focus {
     outline: 3px dashed rgb(255, 165, 0);
 }
 
-
 input {
     width: 300px;
     padding: 11px 20px;
@@ -50,6 +49,16 @@ label {
     font-weight: 600;
     text-align: center;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+  }
 
 .icon {
     font-size: 30px;
@@ -91,9 +100,9 @@ label {
     }
     select {
         width: 240px;
-    }
-    
+    }    
 }
+
 @media (max-width: 530px) {
     
     .err-submit{

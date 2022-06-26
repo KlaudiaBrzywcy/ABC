@@ -1,13 +1,11 @@
 .App {
-  
   background-color: #fff;
   padding: 60px 80px; 
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  
+  align-items: center;  
 }
 
 h1{
@@ -20,24 +18,20 @@ h1{
 @media (max-width: 670px) {
   .App {
     padding: 20px 20px; 
-  }
-  
+  }  
 }
-@media (max-width: 530px) {
-    
+@media (max-width: 530px) { 
   h1{
       font-size: 20px;
       margin: 10px 0 20px 0;
   }
 }
 
-@media (max-width: 350px) {
-    
+@media (max-width: 350px) {  
   .App {
     width: 100vw;
     height: 100vh;
     border-radius: 0px;
     padding: 0;
-  
   }
 }
