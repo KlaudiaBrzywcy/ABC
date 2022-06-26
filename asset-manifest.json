@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/HexOcean-app/static/css/main.0ac8ef68.css",
+    "main.js": "/HexOcean-app/static/js/main.21a3515e.js",
+    "static/js/787.c04ee79a.chunk.js": "/HexOcean-app/static/js/787.c04ee79a.chunk.js",
+    "index.html": "/HexOcean-app/index.html",
+    "main.0ac8ef68.css.map": "/HexOcean-app/static/css/main.0ac8ef68.css.map",
+    "main.21a3515e.js.map": "/HexOcean-app/static/js/main.21a3515e.js.map",
+    "787.c04ee79a.chunk.js.map": "/HexOcean-app/static/js/787.c04ee79a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0ac8ef68.css",
+    "static/js/main.21a3515e.js"
+  ]
+}
