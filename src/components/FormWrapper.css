@@ -74,16 +74,34 @@ label {
 .err {
     color: rgb(255, 136, 0);
     font-weight: 600;
-    margin-top: 0px;    
+    margin-top: 0px;
+    text-align: center;    
 } 
 
 .err-submit {
     color: rgb(255, 136, 0);
-    background-color:rgb(51, 75, 83) ;
     text-align: center;
-    padding: 15px 0;
-    border-radius: 20px;
+    font-weight: 700;
+    font-size: 30px;    
 }
+/* media queries */
+@media (max-width: 670px) {
+    input{
+        width: 200px;
+    }
+    select {
+        width: 240px;
+    }
+    
+}
+@media (max-width: 530px) {
+    
+    .err-submit{
+        font-size: 20px;
+    }
+}
+
+
 
 
 

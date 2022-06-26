@@ -69,7 +69,7 @@ const FormWrapper = () => {
         ([, value]) => value !== 0
       );
       console.log(Object.fromEntries(readyFoodieForm));
-      fetch("https://frosty-wood-6558.getsandbox.com:443/dishes", {
+      fetch("https://frosty-wood-6558.getsandbox.com:443/dishe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(Object.fromEntries(readyFoodieForm)),
@@ -79,6 +79,7 @@ const FormWrapper = () => {
         )
         .then(() => resetForm())
         .then(() => setStateID(uuidv4()))
+        .then(() => setErrSubmit(""))
         .catch((error) => {
           console.log("Submission failed");
           setErrSubmit("Submission failed!");
